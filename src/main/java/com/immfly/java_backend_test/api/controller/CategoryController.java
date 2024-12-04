@@ -29,7 +29,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryOutputDto>> getCategories() {
-        return ResponseEntity.ok(CategoryMapper.toDtoList(categoryService.getAllCategories()));
+        return ResponseEntity.ok(CategoryMapper.toOutputDtoList(categoryService.getAllCategories()));
     }
 
     @PostMapping
@@ -38,8 +38,8 @@ public class CategoryController {
         if (categoryInputDto.getParentCategoryId() != null) {
             parentCategory = categoryService.getById(UUID.fromString(categoryInputDto.getParentCategoryId()));
         }
-        Category newCategory = CategoryMapper.fromDto(categoryInputDto);
+        Category newCategory = CategoryMapper.fromInputDto(categoryInputDto);
         newCategory.setParentCategory(parentCategory);
-        return ResponseEntity.ok(CategoryMapper.toDto(categoryService.saveCategory(newCategory)));
+        return ResponseEntity.ok(CategoryMapper.toOutputDto(categoryService.saveCategory(newCategory)));
     }
 }

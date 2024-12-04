@@ -21,5 +21,8 @@ public class OrderOutputDto {
     private String paymentStatus;
     private Date paymentDate;
     private String paymentGateway;
+    private String buyerEmail;
+    private String seatLetter;
+    private Integer seatNumber;
 
 }

@@ -28,13 +28,13 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderOutputDto>> getOrders() {
-        return ResponseEntity.ok(OrderMapper.toDtoList(orderService.getAllOrders()));
+        return ResponseEntity.ok(OrderMapper.toOutputDtoList(orderService.getAllOrders()));
     }
 
     @PostMapping
     public ResponseEntity<OrderOutputDto> saveOrder(@RequestBody OrderInputDto orderInputDto) {
-        Order newOrder = OrderMapper.fromDto(orderInputDto);
-        return ResponseEntity.ok(OrderMapper.toDto(orderService.savOrder(newOrder)));
+        Order newOrder = OrderMapper.fromInputDto(orderInputDto);
+        return ResponseEntity.ok(OrderMapper.toOutputDto(orderService.savOrder(newOrder)));
     }
 
 }

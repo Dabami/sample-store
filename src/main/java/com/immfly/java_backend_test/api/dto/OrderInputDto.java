@@ -8,12 +8,12 @@ import lombok.Setter;
 @Setter
 public class OrderInputDto {
 
-    @Schema(example = "5555555555555555")
-    private String cardToken;
-    @Schema(example = "ING")
-    private String paymentGateway;
-    @Schema(example = "buyer@email.com")
-    private String buyerEmail;
+    // @Schema(example = "5555555555555555")
+    // private String cardToken;
+    // @Schema(example = "ING")
+    // private String paymentGateway;
+    // @Schema(example = "buyer@email.com")
+    // private String buyerEmail;
     @Schema(example = "A")
     private String seatLetter;
     @Schema(example = "10")

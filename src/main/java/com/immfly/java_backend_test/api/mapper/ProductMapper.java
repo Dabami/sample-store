@@ -10,7 +10,7 @@ import com.immfly.java_backend_test.domain.entity.Product;
 
 public class ProductMapper {
 
-    public static ProductOutputDto toDto(Product product) {
+    public static ProductOutputDto toOutputDto(Product product) {
         return ProductOutputDto.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -19,16 +19,16 @@ public class ProductMapper {
                 .build();
     }
 
-    public static List<ProductOutputDto> toDtoList(Iterable<Product> products) {
+    public static List<ProductOutputDto> toOutputDtoList(Iterable<Product> products) {
         if (products == null) {
             return List.of();
         }
         return StreamSupport.stream(products.spliterator(), false)
-                .map(ProductMapper::toDto)
+                .map(ProductMapper::toOutputDto)
                 .collect(Collectors.toList());
     }
 
-    public static Product fromDto(ProductInputDto productInputDto) {
+    public static Product fromInputDto(ProductInputDto productInputDto) {
         return Product.builder()
                 .name(productInputDto.getName())
                 .price(productInputDto.getPrice())

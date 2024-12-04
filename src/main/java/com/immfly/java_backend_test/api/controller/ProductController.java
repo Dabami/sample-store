@@ -33,15 +33,15 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductOutputDto>> getProducts() {
-        return ResponseEntity.ok(ProductMapper.toDtoList(productService.getAllProducts()));
+        return ResponseEntity.ok(ProductMapper.toOutputDtoList(productService.getAllProducts()));
     }
 
     @PostMapping
     public ResponseEntity<ProductOutputDto> saveProduct(@RequestBody ProductInputDto productInputDto) {
         Category category = categoryService.getById(UUID.fromString(productInputDto.getCategoryId()));
-        Product newProduct = ProductMapper.fromDto(productInputDto);
+        Product newProduct = ProductMapper.fromInputDto(productInputDto);
         newProduct.setCategory(category);
-        return ResponseEntity.ok(ProductMapper.toDto(productService.saveProduct(newProduct)));
+        return ResponseEntity.ok(ProductMapper.toOutputDto(productService.saveProduct(newProduct)));
     }
 
 }

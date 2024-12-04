@@ -10,7 +10,7 @@ import com.immfly.java_backend_test.domain.entity.Category;
 
 public class CategoryMapper {
 
-    public static CategoryOutputDto toDto(Category category) {
+    public static CategoryOutputDto toOutputDto(Category category) {
         return CategoryOutputDto.builder()
                 .id(category.getId())
                 .name(category.getName())
@@ -18,13 +18,13 @@ public class CategoryMapper {
                 .build();
     }
 
-    public static List<CategoryOutputDto> toDtoList(Iterable<Category> categories) {
+    public static List<CategoryOutputDto> toOutputDtoList(Iterable<Category> categories) {
         return StreamSupport.stream(categories.spliterator(), false)
-                .map(CategoryMapper::toDto)
+                .map(CategoryMapper::toOutputDto)
                 .collect(Collectors.toList());
     }
 
-    public static Category fromDto(CategoryInputDto categoryInputDto) {
+    public static Category fromInputDto(CategoryInputDto categoryInputDto) {
         return Category.builder()
                 .name(categoryInputDto.getName())
                 .build();

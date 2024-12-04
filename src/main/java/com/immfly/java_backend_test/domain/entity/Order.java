@@ -45,9 +45,7 @@ public class Order {
     private Date paymentDate;
     private String paymentGateway;
     private String buyerEmail;
-    @NotNull
     private String seatLetter;
-    @NotNull
     private Integer seatNumber;
 
     public enum Status {
