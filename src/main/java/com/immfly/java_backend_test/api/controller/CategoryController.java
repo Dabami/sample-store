@@ -1,5 +1,6 @@
 package com.immfly.java_backend_test.api.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Iterable<CategoryOutputDto>> getCategories() {
+    public ResponseEntity<List<CategoryOutputDto>> getCategories() {
         return ResponseEntity.ok(CategoryMapper.toDtoList(categoryService.getAllCategories()));
     }
 
@@ -37,10 +38,8 @@ public class CategoryController {
         if (categoryInputDto.getParentCategoryId() != null) {
             parentCategory = categoryService.getById(UUID.fromString(categoryInputDto.getParentCategoryId()));
         }
-        Category newCategory = Category.builder()
-                .name(categoryInputDto.getName())
-                .parentCategory(parentCategory)
-                .build();
+        Category newCategory = CategoryMapper.fromDto(categoryInputDto);
+        newCategory.setParentCategory(parentCategory);
         return ResponseEntity.ok(CategoryMapper.toDto(categoryService.saveCategory(newCategory)));
     }
 }

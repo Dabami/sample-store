@@ -39,11 +39,8 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductOutputDto> saveProduct(@RequestBody ProductInputDto productInputDto) {
         Category category = categoryService.getById(UUID.fromString(productInputDto.getCategoryId()));
-        Product newProduct = Product.builder()
-                .name(productInputDto.getName())
-                .price(productInputDto.getPrice())
-                .category(category)
-                .build();
+        Product newProduct = ProductMapper.fromDto(productInputDto);
+        newProduct.setCategory(category);
         return ResponseEntity.ok(ProductMapper.toDto(productService.saveProduct(newProduct)));
     }
 

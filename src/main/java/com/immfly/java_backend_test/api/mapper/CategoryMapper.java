@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.immfly.java_backend_test.api.dto.CategoryInputDto;
 import com.immfly.java_backend_test.api.dto.CategoryOutputDto;
 import com.immfly.java_backend_test.domain.entity.Category;
 
@@ -21,6 +22,12 @@ public class CategoryMapper {
         return StreamSupport.stream(categories.spliterator(), false)
                 .map(CategoryMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public static Category fromDto(CategoryInputDto categoryInputDto) {
+        return Category.builder()
+                .name(categoryInputDto.getName())
+                .build();
     }
 
 }
