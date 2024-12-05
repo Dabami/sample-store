@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.immfly.java_backend_test.api.dto.ProductInputDto;
 import com.immfly.java_backend_test.api.dto.ProductOutputDto;
 import com.immfly.java_backend_test.api.mapper.ProductMapper;
-import com.immfly.java_backend_test.domain.entity.Category;
 import com.immfly.java_backend_test.domain.entity.Product;
 import com.immfly.java_backend_test.service.CategoryService;
 import com.immfly.java_backend_test.service.ProductService;
@@ -38,10 +37,8 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductOutputDto> saveProduct(@RequestBody ProductInputDto productInputDto) {
-        Category category = categoryService.getById(UUID.fromString(productInputDto.getCategoryId()));
         Product newProduct = ProductMapper.fromInputDto(productInputDto);
-        newProduct.setCategory(category);
-        return ResponseEntity.ok(ProductMapper.toOutputDto(productService.saveProduct(newProduct)));
+        return ResponseEntity.ok(ProductMapper.toOutputDto(productService.saveProduct(newProduct, UUID.fromString(productInputDto.getCategoryId()))));
     }
 
 }

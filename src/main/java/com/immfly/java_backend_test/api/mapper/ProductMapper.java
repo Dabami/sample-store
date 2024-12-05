@@ -16,6 +16,7 @@ public class ProductMapper {
                 .name(product.getName())
                 .price(product.getPrice())
                 .categoryId(product.getCategory().getId())
+                .stock(product.getStock())
                 .build();
     }
 
@@ -32,6 +33,7 @@ public class ProductMapper {
         return Product.builder()
                 .name(productInputDto.getName())
                 .price(productInputDto.getPrice())
+                .stock(productInputDto.getStock())
                 .build();
     }
 

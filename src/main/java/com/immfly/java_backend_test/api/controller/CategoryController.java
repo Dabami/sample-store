@@ -34,12 +34,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryOutputDto> saveCategory(@RequestBody CategoryInputDto categoryInputDto) {
-        Category parentCategory = null;
-        if (categoryInputDto.getParentCategoryId() != null) {
-            parentCategory = categoryService.getById(UUID.fromString(categoryInputDto.getParentCategoryId()));
-        }
         Category newCategory = CategoryMapper.fromInputDto(categoryInputDto);
-        newCategory.setParentCategory(parentCategory);
-        return ResponseEntity.ok(CategoryMapper.toOutputDto(categoryService.saveCategory(newCategory)));
+        return ResponseEntity.ok(CategoryMapper.toOutputDto(categoryService.saveCategory(newCategory, UUID.fromString(categoryInputDto.getParentCategoryId()))));
     }
 }

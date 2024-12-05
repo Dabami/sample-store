@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.immfly.java_backend_test.domain.entity.Category;
 import com.immfly.java_backend_test.domain.repository.CategoryRepository;
+import com.immfly.java_backend_test.exception.CategoryNotFoundException;
 
 @Service
 public class CategoryService {
@@ -18,11 +19,14 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category getById(UUID id) {
-        return categoryRepository.findById(id).get();
+    public Category getCategoryById(UUID id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Category with id " + id + " not found."));
     }
 
-    public Category saveCategory(Category category) {
+    public Category saveCategory(Category category, UUID parentCategoryId) {
+        if (parentCategoryId != null) {
+            category.setParentCategory(getCategoryById(parentCategoryId));
+        }
         return categoryRepository.save(category);
     }
 

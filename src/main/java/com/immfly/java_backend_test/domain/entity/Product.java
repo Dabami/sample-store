@@ -34,5 +34,6 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
     private String image;
+    private Integer stock;
 
 }

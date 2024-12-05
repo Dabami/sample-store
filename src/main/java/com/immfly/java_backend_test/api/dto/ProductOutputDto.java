@@ -15,5 +15,6 @@ public class ProductOutputDto {
     private String name;
     private float price;
     private UUID categoryId;
+    private Integer stock;
 
 }
