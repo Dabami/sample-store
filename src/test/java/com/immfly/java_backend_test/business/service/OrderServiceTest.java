@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.immfly.java_backend_test.business.exception.OrderNotOpenException;
 import com.immfly.java_backend_test.business.exception.ProductOutOfStockException;
 import com.immfly.java_backend_test.domain.entity.Order;
 import com.immfly.java_backend_test.domain.entity.Product;
@@ -59,6 +60,7 @@ class OrderServiceTest {
         assertNotNull(result);
         assertEquals(1, result.getProducts().size());
         assertEquals(5.0f, result.getTotalPrice());
+        assertEquals(9, mockProduct.getStock());
         verify(orderRepository, times(1)).save(mockOrder);
         verify(productService, times(1)).saveProduct(any(Product.class));
     }
@@ -122,5 +124,36 @@ class OrderServiceTest {
         verify(orderRepository, times(1)).findById(orderId);
         verify(orderRepository, times(1)).save(any(Order.class));
         verify(paymentService, times(1)).payOrder(any(Order.class));
+    }
+
+    @Test
+    void cancelOrder_ShouldCancelOrder_WhenOrderIsOpen() {
+        UUID orderId = UUID.randomUUID();
+        UUID productId = UUID.randomUUID();
+        Order mockOrder = Order.builder().id(orderId).products(new ArrayList<>()).totalPrice(0.0f).status(Order.Status.OPEN).build();
+        Product mockProduct = Product.builder().id(productId).stock(9).price(5.0f).build();
+        mockOrder.getProducts().add(mockProduct);
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(mockOrder));
+
+        orderService.cancelOrder(orderId);
+
+        assertEquals(1, mockOrder.getProducts().size());
+        assertEquals(0.0f, mockOrder.getTotalPrice());
+        assertEquals(10, mockProduct.getStock());
+        verify(orderRepository, times(1)).save(any(Order.class));
+        verify(productService, times(1)).saveProduct(any(Product.class));
+    }
+
+    @Test
+    void cancelOrder_ShouldThrowException_WhenOrderNotOpen() {
+        UUID orderId = UUID.randomUUID();
+        Order mockOrder = Order.builder().id(orderId).status(Order.Status.FINISHED).build();
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(mockOrder));
+
+        assertThrows(OrderNotOpenException.class, () -> orderService.cancelOrder(orderId));
+        verify(orderRepository, never()).save(any(Order.class));
+        verify(productService, never()).saveProduct(any(Product.class));
     }
 }
