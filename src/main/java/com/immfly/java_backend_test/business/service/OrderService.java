@@ -88,7 +88,7 @@ public class OrderService {
     }
 
     private void checkOrderOpen(Order order) {
-        if (!order.getStatus().equals(Order.Status.OPEN)) {
+        if (!Order.Status.OPEN.equals(order.getStatus())) {
             throw new OrderNotOpenException("Order with id " + order.getId() + " is not open.");
         }
     }

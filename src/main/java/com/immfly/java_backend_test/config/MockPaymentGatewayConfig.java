@@ -14,10 +14,10 @@ public class MockPaymentGatewayConfig {
     public PaymentGateway paymentGateway() {
         PaymentGateway mockGateway = Mockito.mock(PaymentGateway.class);
 
-        Mockito.when(mockGateway.processPayment(Mockito.anyString(), Mockito.anyDouble(), Mockito.eq("ING"))).thenReturn(Order.PaymentStatus.PAID);
-        Mockito.when(mockGateway.processPayment(Mockito.isNull(), Mockito.anyDouble(), Mockito.eq("CASH"))).thenReturn(Order.PaymentStatus.OFFLINE_PAYMENT);
-        Mockito.when(mockGateway.processPayment(Mockito.anyString(), Mockito.anyDouble(), Mockito.isNull())).thenReturn(Order.PaymentStatus.PAYMENT_FAILED);
-        Mockito.when(mockGateway.processPayment(Mockito.isNull(), Mockito.anyDouble(), Mockito.eq("ING"))).thenReturn(Order.PaymentStatus.PAYMENT_FAILED);
+        Mockito.when(mockGateway.processPayment(Mockito.anyString(), Mockito.anyFloat(), Mockito.eq("ING"))).thenReturn(Order.PaymentStatus.PAID);
+        Mockito.when(mockGateway.processPayment(Mockito.isNull(), Mockito.anyFloat(), Mockito.eq("CASH"))).thenReturn(Order.PaymentStatus.OFFLINE_PAYMENT);
+        Mockito.when(mockGateway.processPayment(Mockito.anyString(), Mockito.anyFloat(), Mockito.isNull())).thenReturn(Order.PaymentStatus.PAYMENT_FAILED);
+        Mockito.when(mockGateway.processPayment(Mockito.isNull(), Mockito.anyFloat(), Mockito.eq("ING"))).thenReturn(Order.PaymentStatus.PAYMENT_FAILED);
 
         return mockGateway;
     }

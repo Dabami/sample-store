@@ -4,6 +4,6 @@ import com.immfly.java_backend_test.domain.entity.Order;
 
 public interface PaymentGateway {
 
-    Order.PaymentStatus processPayment(String cardToken, double amount, String paymentGateway);
+    Order.PaymentStatus processPayment(String cardToken, float amount, String paymentGateway);
 
 }
