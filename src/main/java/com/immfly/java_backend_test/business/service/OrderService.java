@@ -67,14 +67,14 @@ public class OrderService {
     public Order addProduct(UUID orderId, UUID productId) {
         Order order = getOrderById(orderId);
         Product product = productService.getProductById(productId);
-        if (product.getStock() > 0) {
-            order.getProducts().add(product);
-            order.setTotalPrice(order.getTotalPrice() + product.getPrice());
-            product.setStock(product.getStock() - 1);
-            productService.saveProduct(product);
-        } else {
-            throw new ProductOutOfStockException("Product with id " + productId + " is out of stock.");
-        }
+
+        checkProductAvailability(product);
+        
+        order.getProducts().add(product);
+        order.setTotalPrice(order.getTotalPrice() + product.getPrice());
+        product.setStock(product.getStock() - 1);
+        productService.saveProduct(product);
+
         return orderRepository.save(order);
     }
 
@@ -90,6 +90,12 @@ public class OrderService {
     private void checkOrderOpen(Order order) {
         if (!order.getStatus().equals(Order.Status.OPEN)) {
             throw new OrderNotOpenException("Order with id " + order.getId() + " is not open.");
+        }
+    }
+
+    private void checkProductAvailability(Product product) {
+        if (product.getStock() <= 0) {
+            throw new ProductOutOfStockException("Product with id " + product.getId() + " is out of stock.");
         }
     }
 
