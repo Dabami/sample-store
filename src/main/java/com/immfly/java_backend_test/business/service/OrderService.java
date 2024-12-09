@@ -1,17 +1,18 @@
-package com.immfly.java_backend_test.service;
+package com.immfly.java_backend_test.business.service;
 
+import java.sql.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.immfly.java_backend_test.business.exception.MissingSeatInformationException;
+import com.immfly.java_backend_test.business.exception.OrderNotFoundException;
+import com.immfly.java_backend_test.business.exception.OrderNotOpenException;
+import com.immfly.java_backend_test.business.exception.ProductOutOfStockException;
 import com.immfly.java_backend_test.domain.entity.Order;
 import com.immfly.java_backend_test.domain.entity.Product;
 import com.immfly.java_backend_test.domain.repository.OrderRepository;
-import com.immfly.java_backend_test.exception.MissingSeatInformationException;
-import com.immfly.java_backend_test.exception.OrderNotFoundException;
-import com.immfly.java_backend_test.exception.OrderNotOpenException;
-import com.immfly.java_backend_test.exception.ProductOutOfStockException;
 
 @Service
 public class OrderService {
@@ -20,6 +21,8 @@ public class OrderService {
     OrderRepository orderRepository;
     @Autowired
     ProductService productService;
+    @Autowired
+    PaymentService paymentService;
 
     public Iterable<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -36,16 +39,29 @@ public class OrderService {
 
     public void cancelOrder(UUID id) {
         Order order = getOrderById(id);
-        if (order.getStatus().equals(Order.Status.OPEN)) {
-            order.setStatus(Order.Status.DROPPED);
-            for (Product product : order.getProducts()) {
-                product.setStock(product.getStock() + 1);
-                productService.saveProduct(product);
-            }
-            orderRepository.save(order);
-        } else {
-            throw new OrderNotOpenException("Order with id " + id + " is not open.");
+        checkOrderOpen(order);
+        order.setStatus(Order.Status.DROPPED);
+        for (Product product : order.getProducts()) {
+            product.setStock(product.getStock() + 1);
+            productService.saveProduct(product);
         }
+        orderRepository.save(order);
+    }
+
+    public Order.PaymentStatus finishOrder(UUID id, String cardToken, String paymentGateway, String buyerEmail) {
+        Order order = getOrderById(id);
+        checkOrderOpen(order);
+        order.setBuyerEmail(buyerEmail);
+        order.setCardToken(cardToken);
+        order.setPaymentGateway(paymentGateway);
+        Order.PaymentStatus paymentStatus = paymentService.payOrder(order);
+        order.setPaymentStatus(paymentStatus);
+        if (!Order.PaymentStatus.PAYMENT_FAILED.equals(paymentStatus)) {
+            order.setPaymentDate(new Date(System.currentTimeMillis()));
+            order.setStatus(Order.Status.FINISHED);
+        }
+        orderRepository.save(order);
+        return paymentStatus;
     }
 
     public Order addProduct(UUID orderId, UUID productId) {
@@ -68,6 +84,12 @@ public class OrderService {
         }
         if (order.getSeatNumber() == null) {
             throw new MissingSeatInformationException("Seat number is required.");
+        }
+    }
+
+    private void checkOrderOpen(Order order) {
+        if (!order.getStatus().equals(Order.Status.OPEN)) {
+            throw new OrderNotOpenException("Order with id " + order.getId() + " is not open.");
         }
     }
 

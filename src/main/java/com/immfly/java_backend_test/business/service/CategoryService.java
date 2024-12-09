@@ -1,13 +1,13 @@
-package com.immfly.java_backend_test.service;
+package com.immfly.java_backend_test.business.service;
 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.immfly.java_backend_test.business.exception.CategoryNotFoundException;
 import com.immfly.java_backend_test.domain.entity.Category;
 import com.immfly.java_backend_test.domain.repository.CategoryRepository;
-import com.immfly.java_backend_test.exception.CategoryNotFoundException;
 
 @Service
 public class CategoryService {

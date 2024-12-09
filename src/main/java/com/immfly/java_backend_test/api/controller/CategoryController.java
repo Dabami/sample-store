@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.immfly.java_backend_test.api.dto.CategoryInputDto;
 import com.immfly.java_backend_test.api.dto.CategoryOutputDto;
 import com.immfly.java_backend_test.api.mapper.CategoryMapper;
+import com.immfly.java_backend_test.business.service.CategoryService;
 import com.immfly.java_backend_test.domain.entity.Category;
-import com.immfly.java_backend_test.service.CategoryService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
