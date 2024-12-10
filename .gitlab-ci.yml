@@ -11,7 +11,6 @@ test:
     when: always
     paths:
       - build/reports/tests/test/index.html
-      - build/reports/jacoco/test/html/index.html
     expire_in: 1 week
   cache:
     key: gradle-cache
