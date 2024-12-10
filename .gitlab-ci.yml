@@ -5,8 +5,10 @@ test:
   image: gradle:7.6.2-jdk17
   stage: test
   script:
+    - chmod +x ./gradlew
     - echo "Starting Gradle tests..."
     - ./gradlew test
+    - ls -R build/reports
   artifacts:
     when: always
     paths:
