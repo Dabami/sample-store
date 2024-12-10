@@ -1,5 +1,6 @@
 stages:
   - test
+  - deploy
 
 test:
   image: gradle:7.6.2-jdk17
@@ -19,3 +20,12 @@ test:
     paths:
       - .gradle/wrapper/
       - .gradle/caches/
+
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp -r build/reports/tests/test/* public
+  artifacts:
+    paths:
+      - public
