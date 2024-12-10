@@ -1,0 +1,20 @@
+stages:
+  - test
+
+test:
+  image: gradle:7.6.2-jdk17
+  stage: test
+  script:
+    - echo "Starting Gradle tests..."
+    - ./gradlew test
+  artifacts:
+    when: always
+    paths:
+      - build/reports/tests/test/index.html
+      - build/reports/jacoco/test/html/index.html
+    expire_in: 1 week
+  cache:
+    key: gradle-cache
+    paths:
+      - .gradle/wrapper/
+      - .gradle/caches/
