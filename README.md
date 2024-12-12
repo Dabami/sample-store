@@ -66,3 +66,7 @@ To run the tests:
 
 ```bash
 ./gradlew test
+```
+To see the test report:
+
+https://immfly-4ece14.gitlab.io/
