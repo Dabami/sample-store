@@ -50,23 +50,25 @@ Immfly Java Backend technical test.
 
 ## Running the Application
 
-2. Start the application:
+1. Start the application:
 
     ```bash
     ./gradlew bootRun
     ```
 
-3. Access the API documentation at: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+2. Access the API documentation at: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ---
 
 ## Testing
 
-To run the tests:
+1. Run the tests:
 
 ```bash
 ./gradlew test
 ```
-To see the test report:
+2. See the test report:
 
-https://immfly-4ece14.gitlab.io/
+On Gitlab: https://immfly-4ece14.gitlab.io/
+
+On local: build\reports\tests\test\index.html
