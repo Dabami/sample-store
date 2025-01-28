@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.0'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'maven-publish'
 }
 
 group = 'com.immfly'
@@ -19,8 +20,35 @@ configurations {
 	}
 }
 
+publishing {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/Dabami/sample-store")
+			credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            artifact file("libs/control-plane-api.jar") // Usa el JAR preconstruido
+			groupId = 'com.github.Dabami'
+            artifactId = 'control-plane-api' // El nombre del artefacto
+			version = '1.0.1'
+        }
+    }
+}
+
 repositories {
 	mavenCentral()
+	maven {
+        url = uri("https://maven.pkg.github.com/Dabami/sample-store")
+		credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
@@ -29,6 +57,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 	implementation 'org.springdoc:springdoc-openapi-starter-common:2.7.0'
+	implementation 'com.github.Dabami:control-plane-api:1.0.1'
 	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

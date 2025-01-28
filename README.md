@@ -20,7 +20,7 @@ Immfly Java Backend technical test.
 - Global exception handler.
 - Automated API documentation using Swagger.
 - Unit tests with Mockito and JUnit 5.
-- Some clean code ans SOLID principles.
+- Some clean code and SOLID principles.
 
 ---
 

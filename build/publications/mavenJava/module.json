@@ -1,0 +1,106 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "Dabami",
+    "module": "control-plane-api",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.11.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "control-plane-api-1.0.0-plain.jar",
+          "url": "control-plane-api-1.0.0-plain.jar",
+          "size": 49081,
+          "sha512": "329908e2ca03c0eed17a37cbf82d4bd9f02333b88f0cc1e6a07d3f0e7efbd8eec1f33f766c4903df435aa74a314d829be15aa82f0095c038ca4fc10e1b04ba9c",
+          "sha256": "e7c99bc2c1a53b0ddc19b3b1c832bc309a3677b669dd016f030f3ebf674a9a7a",
+          "sha1": "80e73d6415093cf24ffbf9604740986b9e4e4548",
+          "md5": "3ae110ddf7a18615494db66bf1baf8e8"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-data-jpa"
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-security"
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-web"
+        },
+        {
+          "group": "org.springdoc",
+          "module": "springdoc-openapi-starter-webmvc-ui",
+          "version": {
+            "requires": "2.7.0"
+          }
+        },
+        {
+          "group": "org.springdoc",
+          "module": "springdoc-openapi-starter-common",
+          "version": {
+            "requires": "2.7.0"
+          }
+        },
+        {
+          "group": "org.mockito",
+          "module": "mockito-core",
+          "version": {
+            "requires": "5.5.0"
+          }
+        },
+        {
+          "group": "org.mockito",
+          "module": "mockito-junit-jupiter",
+          "version": {
+            "requires": "5.5.0"
+          }
+        },
+        {
+          "group": "com.h2database",
+          "module": "h2"
+        }
+      ],
+      "files": [
+        {
+          "name": "control-plane-api-1.0.0-plain.jar",
+          "url": "control-plane-api-1.0.0-plain.jar",
+          "size": 49081,
+          "sha512": "329908e2ca03c0eed17a37cbf82d4bd9f02333b88f0cc1e6a07d3f0e7efbd8eec1f33f766c4903df435aa74a314d829be15aa82f0095c038ca4fc10e1b04ba9c",
+          "sha256": "e7c99bc2c1a53b0ddc19b3b1c832bc309a3677b669dd016f030f3ebf674a9a7a",
+          "sha1": "80e73d6415093cf24ffbf9604740986b9e4e4548",
+          "md5": "3ae110ddf7a18615494db66bf1baf8e8"
+        }
+      ]
+    }
+  ]
+}
